@@ -1,6 +1,7 @@
 export const validationRule = {
     "email": "required|email",
-    "name": "required|string",
+    "firstName": "required|string",
+    "lastName" : "required|string",
     "password": "required|string|min:6",
     "role": "required|numeric"
 };

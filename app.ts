@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-// const itemRouter = require("./routes/item");
+const enrolRouter = require("./routes/courseenrollment");
 // const orderRouter = require("./routes/order");
 const rolesRouter = require("./routes/roles");
 const permissionRouter = require("./routes/permissions");
@@ -50,7 +50,7 @@ async function myLogger(req: CustomRequest, res: Response, next: NextFunction) {
       req.ability = anonymousPermissions;
     }
   } catch (error) {
-      //next(JSON.stringify({ TokenExpiredError: 'jwt expired' }));
+      next(JSON.stringify({ TokenExpiredError: 'jwt expired' }));
   }
   next()
 }
@@ -59,6 +59,7 @@ app.use(myLogger)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/users', enrolRouter);
 // app.use('/items', itemRouter);
 // app.use('/orders', orderRouter);
 app.use('/roles', rolesRouter);

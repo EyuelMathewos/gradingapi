@@ -4,7 +4,7 @@ import { validator } from "../validator/index";
 import { validationRule,loginValidation } from "../validator/userValidation";
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, Prisma } = require('@prisma/client');
 const { accessibleBy } = require('@casl/prisma');
 const { permittedFieldsOf } = require('@casl/ability/extra');
 const { ForbiddenError } = require('@casl/ability');
@@ -57,15 +57,27 @@ router.route("/")
                       data: {
                         name: req.body.name,
                         email: req.body.email,
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
                         password: hash,
+                        social: req.body.social,
                         role: role
                       },
                     });
                     res.json(User)
             }
-          }).catch((error: Error) => {
-            res.status(412)
-            res.send(error)
+          }).catch((error: any) => {
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+              if (error.code === 'P2002') {
+                res.status(409)
+                res.send({
+                  error: 'There is a unique constraint violation, a new user cannot be created with this email'
+                });
+              }
+            }else{
+                res.status(412)
+                res.send(error)
+            }
           });
     } catch (error: any) {
       if ( error instanceof ForbiddenError ) {

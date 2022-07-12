@@ -13,10 +13,9 @@ datasource db {
 model User {
   id           Int         @id @default(autoincrement())
   email        String      @unique
-  name         String?
-  password     String
   firstName    String?
   lastName     String?
+  password     String
   social       Json?
   role         Int
   // Relation fields
@@ -93,9 +92,4 @@ model permissions {
     conditions   Json?
     fields       Json?        
     permissionslist roles   @relation(fields: [roleId], references: [id])
-}
-
-enum UserRole {
-  STUDENT
-  TEACHER
 }
