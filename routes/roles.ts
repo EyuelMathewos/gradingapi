@@ -91,9 +91,8 @@ router.route("/:id")
 
   .put(async (req: CustomRequest, res: Response) => {
     const id = parseInt(req.params.id);
-    console.log({id})
       try{
-          // ForbiddenError.from(req.ability).throwUnlessCan('update', "roles");
+          ForbiddenError.from(req.ability).throwUnlessCan('update', "roles");
           validator(req.body, createRule, {}).then(async (response: any) => {
           const roles = await prisma.roles.update({
             where: {

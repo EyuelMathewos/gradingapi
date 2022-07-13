@@ -4,7 +4,10 @@ const path = require('path');
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const enrolRouter = require("./routes/courseenrollment");
-// const orderRouter = require("./routes/order");
+const courseRouter = require("./routes/course");
+const testRouter = require("./routes/test");
+const testResCourse = require("./routes/testResultsCourse")
+const testResUser = require("./routes/testResultsUser")
 const rolesRouter = require("./routes/roles");
 const permissionRouter = require("./routes/permissions");
 const defineAbilitiesFor = require('./accesscontrol/accesscontrol');
@@ -58,10 +61,8 @@ async function myLogger(req: CustomRequest, res: Response, next: NextFunction) {
 app.use(myLogger)
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/users', enrolRouter);
-// app.use('/items', itemRouter);
-// app.use('/orders', orderRouter);
+app.use('/users', usersRouter, enrolRouter, testResUser);
+app.use('/courses', courseRouter, testRouter, testResCourse);
 app.use('/roles', rolesRouter);
 app.use('/permissions', permissionRouter);
 

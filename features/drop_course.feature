@@ -4,6 +4,8 @@ Feature: Dropping a course
           |    id    |        email      |firstName | 
           |     1    |    test@gmail.com |   test   |
     When student drop for course <courseId>
+    Then droping course should get response of code 200 with message "Course Droped successfully"
+    
+    Examples:
             |          course           |  courseDetails      |   courseId   |   
-            |  introduction to nc       |  course discription |     3        |
-    Then droping course should get response of 200
+            |  introduction to nc       |  course discription |       3      |

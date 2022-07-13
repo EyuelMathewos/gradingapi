@@ -1,4 +1,4 @@
-# @user
+@important
 Feature: user signup for new account
   Scenario: user already siginup for account
     Given user information already siginup with Email "<email>" firstName "<firstName>" lastName "<lastName>" password "<password>" social "<social>" role <role>

@@ -64,7 +64,10 @@ router.route("/")
                         role: role
                       },
                     });
-                    res.json(User)
+                    res.status(201).json({
+                      message:"user created successfully",
+                      data: User
+                    });
             }
           }).catch((error: any) => {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -89,6 +92,38 @@ router.route("/")
         res.send(error);
       }
     }
+  })
+  .delete(async (req: CustomRequest, res: Response) => {
+      const email = req.body.email;
+      try {
+          //ForbiddenError.from(req.ability).throwUnlessCan('delete', "user");
+          const User = await prisma.User.delete({
+            where: {
+              email
+            },
+          })
+          res.json({
+            message:`user successfully deleted`,
+            id: User.id
+          })
+      } catch (error: any) {
+        if ( error instanceof ForbiddenError ) {
+          return res.status(403).send({
+            status: 'forbidden',
+            message: error.message
+          });
+        }
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+          if (error.code === 'P2025') {
+            res.status(410)
+            res.send({
+              error: 'Record to delete does not exist.'
+            });   
+        } 
+        }else{
+           res.send(error);
+        }
+      }
   })
 
 router.route("/login")
@@ -189,16 +224,11 @@ router.route("/:id")
     const id = parseInt(req.params.id);
       try {
           ForbiddenError.from(req.ability).throwUnlessCan('delete', "user");
-          console.log(  [
-            {id: id},
-            JSON.stringify(accessibleBy(req.ability).User),
-          ] )
           const User = await prisma.User.delete({
             where: {
               id,
             },
           });
-          console.log(User)
           res.json(User)
       } catch (error: any) {
         if ( error instanceof ForbiddenError ) {

@@ -1,4 +1,3 @@
-@enrol
 Feature: Enrolling for a course
   Scenario: student enrolling for a course 
     Given student account sign with account

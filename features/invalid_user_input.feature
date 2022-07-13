@@ -1,4 +1,4 @@
-# @user
+@important
 Feature: user signup for new account
   Scenario: user Enter invalid user data
     Given invalid user email "<email>" firstName "<firstName>" lastName "<lastName>" password "<password>" social "<social>" role <role>

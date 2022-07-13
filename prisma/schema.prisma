@@ -41,8 +41,8 @@ model CourseEnrollment {
   // Relation Fields
   userId   Int
   courseId Int
-  user     User   @relation(fields: [userId], references: [id])
-  course   Course @relation(fields: [courseId], references: [id])
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@id([userId, courseId])
   @@index([userId, role])

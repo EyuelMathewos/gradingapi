@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { validator } from "../validator/index";
-import { itemValidation } from "../validator/itemValidation";
+import { courseValidation } from "../validator/courseValidation";
 
 const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
@@ -34,18 +34,18 @@ router.route("/")
 
   .post(async (req: CustomRequest, res: Response) => {
     if (req.ability.can('create', 'Course')) {
-      validator(req.body, itemValidation, {}).then(async (response: any) => {
-          const Course = await prisma.Course.create({
-            data: {
-              itemname: req.body.itemname,
-              itemprice: parseInt(req.body.itemprice)
-            },
-          }).catch((error: string) => {
-            res.send(error);
-          })
+      validator(req.body, courseValidation, {}).then(async (response: any) => {
+        const Course = await prisma.Course.create({
+          data: {
+            name: req.body.name,
+            courseDetails: req.body.courseDetails
+          },
+        }).catch((error: string) => {
+          res.send(error);
+        })
 
-          res.json(Course)
-        
+        res.json(Course)
+
       });
     } else {
       try {
@@ -60,5 +60,61 @@ router.route("/")
 
 
   })
+router.route("/:courseId")
+  .get(async (req: Request, res: Response) => {
+    const courseId = parseInt(req.params.courseId);
+    const courseenrollment = await prisma.Course.findMany({
+      where: {
+        courseId
+      },
+    }).catch((error: Error) => {
+      res.json(error)
+    })
+    res.json(courseenrollment);
+  })
+
+  .put(async (req: CustomRequest, res: Response) => {
+    const id = parseInt(req.params.id);
+    try {
+      ForbiddenError.from(req.ability).throwUnlessCan('update', "Course");
+      validator(req.body, courseValidation, {}).then(async (response: any) => {
+        const course = await prisma.Course.update({
+          where: {
+            id
+          },
+          data: {
+            name: req.body.name,
+            courseDetails: req.body.courseDetails
+          },
+        });
+        res.json(course)
+      }).catch((error: Error) => {
+        res.status(412)
+        res.send(error)
+      });
+
+    } catch (error: any) {
+      if (error instanceof ForbiddenError) {
+        return res.status(403).send({
+          status: 'forbidden',
+          message: error.message
+        });
+      } else {
+        res.send(error);
+      }
+    }
+  })
+  .delete(async (req: Request, res: Response) => {
+    const courseId = parseInt(req.params.courseId);
+    const course = await prisma.Course.delete({
+      where: {
+        courseId,
+      },
+    }).catch((error: Error) => {
+      res.json(error)
+    });
+    res.json(course)
+  })
+
 
 module.exports = router;

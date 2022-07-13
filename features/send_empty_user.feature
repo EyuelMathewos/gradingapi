@@ -1,4 +1,4 @@
-@user
+@important
 Feature: user signup for new account
   Scenario: user siginup with no information
     Given undefined user information
