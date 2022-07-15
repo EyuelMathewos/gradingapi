@@ -7,17 +7,16 @@ let user:any, data:any, id:number, role: number, response:any, error:any, bearer
 let statusValues:number;
 
 Before(async function () {
-        const response = await request.post("/users/login").send({
+        const loginRes = await request.post("/users/login").send({
         email: "student@gmail.com",
         password: "123456"
     });
-    bearerToken = response.body.token
+    bearerToken = loginRes.body.token
 })
 
-Given('student account sign with account', function (dataTable) {
-    user = dataTable.hashes();
-    id = parseInt(user[0].id);
-    role = parseInt(user[0].role);
+Given('student account sign with account {int} and with role {int}', function (userId, roldId) {
+    id = userId;
+    role = roldId;
 });
 
 When('student enroll for a course {int}', async function (courseId) {
@@ -31,8 +30,11 @@ When('student enroll for a course {int}', async function (courseId) {
     .send(data);
   });
 
-  Then('should get response from enroll courses with status code {int}', function ( statusCode ) {
-        assertThat(response.status, statusCode );
+  Then('should get response from enroll courses with status code {int} and with message {string}', function (expectedCode, expectedMessage) {
+        const code = response.status;
+        const message = response.body.message
+        assertThat(code, expectedCode );
+        assertThat(message, expectedMessage );
         assertThat(typeof(data.userId), 'number');
         assertThat(typeof(data.courseId), 'number');
         assertThat(typeof(data.role), 'number');

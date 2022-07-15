@@ -44,7 +44,11 @@ router.route("/")
           res.send(error);
         })
 
-        res.json(Course)
+        res.json(
+          {
+            message: "Course created successfully",
+            data: Course
+          })
 
       });
     } else {

@@ -1,5 +1,5 @@
-@important
-Feature: user signup for new account
+@important @invaliduser
+Feature: creating user account
   Scenario: user Enter invalid user data
     Given invalid user email "<email>" firstName "<firstName>" lastName "<lastName>" password "<password>" social "<social>" role <role>
     When  try to register with invalid data

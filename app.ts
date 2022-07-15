@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import { JsonWebTokenError } from 'jsonwebtoken';
 const app = express();
 const path = require('path');
 const indexRouter = require("./routes/index");
@@ -35,9 +36,6 @@ async function myLogger(req: CustomRequest, res: Response, next: NextFunction) {
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
       const verifydecoded = await verifyToken( bearerToken );
-      if (verifydecoded instanceof Error) {
-        throw ({ TokenExpiredError: 'jwt expired' });
-      }
       res.setHeader("token", bearerToken);
       const user = { id: verifydecoded.clientId };
       const usersPermissions = await getUserRoles(verifydecoded.clientId);
@@ -53,7 +51,11 @@ async function myLogger(req: CustomRequest, res: Response, next: NextFunction) {
       req.ability = anonymousPermissions;
     }
   } catch (error) {
-      next(JSON.stringify({ TokenExpiredError: 'jwt expired' }));
+      if(error instanceof JsonWebTokenError){
+        next(res.status(401).send(error));
+      }else{
+        res.send(error)
+      }
   }
   next()
 }

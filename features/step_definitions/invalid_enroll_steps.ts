@@ -17,23 +17,19 @@ Given('user information', function (dataTable) {
     role = parseInt(user[0].role);
 });
 
-When('try to enroll with course does\'t exist with course id {int}', async function (courseId) {
+When('try to enroll with course does\'t exist with course id {string}', async function (courseId: string) {
   const  data = {
         userId,
-        courseId: courseId,
+        courseId,
         role
-    };                        ///:userId/courses
+    };
 response = await request.post(`/users/${userId}/courses`)
 .set('Authorization', `Bearer ${bearerToken}` )
 .send(data);
 error = response.body;
-console.log("invalid enroll")
-console.log(response)
-
-
 });
 
 Then('the enrolling user should get a response field {string}  message {string}', function (field:string, errorMessage:string ) {
    const data:object =  { [field]:  [errorMessage] }
-   //assertThat(error.errors, data)
+   assertThat(error.errors, data);
   });

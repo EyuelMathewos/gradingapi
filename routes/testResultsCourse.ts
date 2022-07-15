@@ -39,7 +39,6 @@ router.route("/tests/:testId/test-results")
                 date: new Date()
               },
             }).catch((error: string) => {
-              console.log(error)
               res.send(error);
             })
     

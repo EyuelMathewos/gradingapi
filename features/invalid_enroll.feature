@@ -1,4 +1,4 @@
-@important @bug
+@important
 Feature: Enrolling for a course
   Scenario: student enrolling for a course does't exist
     Given user information
@@ -8,5 +8,5 @@ Feature: Enrolling for a course
     Then  the enrolling user should get a response field "<error>"  message "<errorOcc>"
     Examples:
        | courseId |   name  |  courseDetails  |  error   |          errorOcc                          |
-       |   100    |     12  |    12           | courseId | The courseId must be a number.             |
+       |   "ts"   |     12  |    12           | courseId | The courseId must be a number.             |
 

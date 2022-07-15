@@ -28,7 +28,7 @@ When('student enroll for course does\'t exist {int}', async function (courseId:n
     response = await request.post(`/users/${id}/courses`)
     .set('Authorization', `Bearer ${bearerToken}` )
     .send(data);
-    errorMessage = response.body
+    errorMessage = response.body;
 });
 
 

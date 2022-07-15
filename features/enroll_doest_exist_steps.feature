@@ -1,4 +1,4 @@
-@important
+@important @enrollDontexist
 Feature: Enrolling for a course
   Scenario: student enrolling for a course 
     Given sign with student account

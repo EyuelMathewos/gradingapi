@@ -83,7 +83,11 @@ export function verifyToken( bearerToken:string ){
       jwt.verify(bearerToken, process.env.SECRET,
         function (err: Error, decoded: object) {
           if (err) {
-            reject(err)
+            const error = {
+              name: err.name,
+              message: err.message
+            }
+            reject( error )
           } else {
             resolve( decoded )
           }

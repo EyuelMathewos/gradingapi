@@ -1,3 +1,4 @@
+@dropcourse
 Feature: Dropping a course
   Scenario: student Dropping a course enrolled for 
     Given student siginup with this account info

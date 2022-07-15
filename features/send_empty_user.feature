@@ -1,5 +1,5 @@
-@important
-Feature: user signup for new account
+@user @important
+Feature: creating user account
   Scenario: user siginup with no information
     Given undefined user information
     When  try to create user account with undefined data
