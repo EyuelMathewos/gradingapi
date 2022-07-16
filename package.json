@@ -10,7 +10,7 @@
     "build": "tsc",
     "seed": "ts-node ./seed/seed.ts",
     "test": "npm run dbclean && npm run seed && npm run cucumber:run",
-    "cucumber:run":"cucumber-js",
+    "cucumber:run":"cucumber-js --publish",
     "test:one": "cucumber-js --tags @important",
     "testwatch": "jest --watch",
     "prisma:generate": "prisma generate",

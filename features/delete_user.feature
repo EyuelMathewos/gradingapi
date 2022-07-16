@@ -7,4 +7,4 @@ Feature: deleting user account
 
     Examples:
    |   id   |        email            | firstName  |  lastName|   password   |  social    |   role   |
-   |  134   | studentdelete@gmail.com |   student  |  update  |   123456     |     []     |     1    |
+   |   7    | studentdelete@gmail.com |   student  |  update  |   123456     |     []     |     1    |

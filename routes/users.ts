@@ -82,6 +82,7 @@ router.route("/")
           const hash = await generateHash(req.body.password);
           const User = await prisma.User.create({
             data: {
+              id: req.body.id,
               email: req.body.email,
               firstName: req.body.firstName,
               lastName: req.body.lastName,
@@ -246,8 +247,8 @@ router.route("/:id")
           })
         }
       }).catch((error: Error) => {
-        res.status(412)
-        res.send(error)
+        // res.status(412)
+        // res.send(error)
       });
     } catch (error: any) {
       if (error instanceof ForbiddenError) {

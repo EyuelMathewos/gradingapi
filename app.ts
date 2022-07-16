@@ -54,7 +54,7 @@ async function myLogger(req: CustomRequest, res: Response, next: NextFunction) {
       if(error instanceof JsonWebTokenError){
         next(res.status(401).send(error));
       }else{
-        res.send(error)
+        res.status(401).send('UNAUTHENTICATED USER')
       }
   }
   next()

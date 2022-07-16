@@ -7,4 +7,4 @@ Feature: creating user account
 
     Examples:
    |   id   |        email            | firstName  |  lastName|   password   |  social    |   role   |
-   |  9     | updatestudent@gmail.com |   student  |  update  |   123456     |     []     |     1    |
+   |   3    | updatestudent@gmail.com |   student  |  update  |   123456     |     []     |     1    |

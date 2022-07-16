@@ -5,21 +5,11 @@ const userapi = require("../../app");
 const request = supertest(userapi);
 let data: any, response: any, statusValues: any, successMessage: any;
 
-// Before({tags: '@usercreate and not @userdelete and not @userupdate'}, async function () {
-//   const loginRes = await request.post("/users/login").send({
-//     email: "admin@casl.io",
-//     password: "123456"
-//   });
-//   const bearerToken = loginRes.body.token;
-//   const userDel = await request.del("/users")
-//     .send({
-//       email: "student@gmail.com"
-//     })
-//     .set('Authorization', `Bearer ${bearerToken}`);
-// })
 
-Given('account information with email {string} firstName {string} lastName {string} password {string} social {string} role {int}', function (email:string, firstName:string, lastName:string, password:string, social:string, role:number) {
+
+Given('account information with id {int} email  {string} firstName {string} lastName {string} password {string} social {string} role {int}', function (id:number,email:string, firstName:string, lastName:string, password:string, social:string, role:number) {
   data = {
+    id,
     email, 
     firstName, 
     lastName, 
